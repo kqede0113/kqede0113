@@ -1,0 +1,46 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft エンチャントコマンド生成</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Minecraft エンチャントコマンド生成ツール</h1>
+        
+        <div class="form-group">
+            <label for="item-type">アイテムの種類:</label>
+<select id="item-type" class="form-control">
+    <option value="minecraft:netherite_sword">ネザライトの剣</option>
+    <option value="minecraft:netherite_helmet">ネザライトのヘルメット</option>
+    <option value="minecraft:netherite_chestplate">ネザライトのチェストプレート</option>
+    <option value="minecraft:netherite_leggings">ネザライトのレギンス</option>
+    <option value="minecraft:netherite_boots">ネザライトのブーツ</option>
+    <option value="minecraft:bow">弓</option>
+    <option value="minecraft:crossbow">クロスボウ</option>
+    <option value="minecraft:trident">トライデント</option>
+    <option value="minecraft:mace">メイス</option>
+</select>
+
+        </div>
+
+        <div class="form-group">
+            <label>エンチャントを選択:</label>
+            <div id="enchantments" class="enchantment-list"></div>
+        </div>
+
+        <button onclick="generateCommand()" class="btn">コマンド生成</button>
+        
+        <div class="result">
+            <h3>生成されたコマンド:</h3>
+            <textarea id="output" readonly></textarea>
+            <button onclick="copyToClipboard()" class="btn copy-btn">クリップボードにコピー</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

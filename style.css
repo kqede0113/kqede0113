@@ -1,0 +1,89 @@
+/* style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #2d2d2d;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+h1 {
+    color: #00ff9d;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    background: #404040;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.enchantment-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.enchantment-item {
+    background: #404040;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    background: #00cc7a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #00b368;
+}
+
+.result {
+    margin-top: 30px;
+}
+
+#output {
+    width: 100%;
+    height: 150px;
+    margin: 10px 0;
+    padding: 10px;
+    background: #404040;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.copy-btn {
+    width: auto;
+    margin-top: 10px;
+}
