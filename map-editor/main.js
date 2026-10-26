@@ -76,6 +76,9 @@ let lastSaveUrl = null;
 
 const colliderBoxes = [];
 const playerBox = new THREE.Box3();
+// PointerLockControls logs a console error when the browser refuses the lock
+// (headless runs, or a click that is not treated as a gesture). The walk loop
+// still handles the keyboard, and the status line explains it.
 const pointerLockError = console.error.bind(console);
 console.error = (...args) => {
   const text = args.map((item) => String(item)).join(' ');
@@ -139,7 +142,7 @@ geometries.pillar.translate(0, 0.775, 0);
 function rampGeometry() {
   const w = 0.92;
   const d = 0.92;
-  const h = 0.48;
+  const h = 0.78;
   const x0 = -w / 2;
   const x1 = w / 2;
   const z0 = -d / 2;
@@ -1067,6 +1070,11 @@ function toggleWalk() {
 
 pointerLock.addEventListener('unlock', () => {
   if (state.mode === 'walk') exitWalk();
+});
+document.addEventListener('pointerlockerror', () => {
+  if (state.mode === 'walk') {
+    renderStatus('マウス視点をロックできませんでした。WASD と Space は使えます');
+  }
 });
 
 function moveAxis(apply) {
