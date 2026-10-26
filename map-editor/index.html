@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3Dマップエディタ</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect fill='%233d7eff' width='16' height='16' rx='3'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <header class="brand">
+        <h1>3Dマップエディタ</h1>
+        <p>40×40 のグリッドに配置します</p>
+      </header>
+
+      <section class="panel">
+        <h2>パレット</h2>
+        <div id="palette" class="palette"></div>
+      </section>
+
+      <section class="panel">
+        <h2>ローカルモデル</h2>
+        <button id="btn-add" type="button" class="btn primary">ローカルのモデルを追加</button>
+        <div id="add-actions" class="add-actions" hidden>
+          <button id="pick-files" type="button" class="btn">ファイルを選択（複数可）</button>
+          <button id="pick-folder" type="button" class="btn">フォルダを選択</button>
+        </div>
+        <p class="note">.glb / .gltf / .stl。フォルダなら隣のテクスチャや .bin も読みます。サーバへは送りません。</p>
+        <input id="model-files" type="file" accept=".glb,.gltf,.stl,.bin,.png,.jpg,.jpeg,.webp,.gif" multiple hidden>
+        <input id="model-folder" type="file" webkitdirectory directory multiple hidden>
+      </section>
+
+      <section class="panel actions">
+        <div class="row">
+          <button id="btn-save" type="button" class="btn">保存</button>
+          <button id="btn-load" type="button" class="btn">読み込み</button>
+          <button id="btn-clear" type="button" class="btn danger">クリア</button>
+        </div>
+        <button id="btn-walk" type="button" class="btn walk">歩いて見る</button>
+        <input id="json-input" type="file" accept=".json,application/json" hidden>
+      </section>
+    </aside>
+
+    <main id="viewport">
+      <div id="loading">読み込み中…</div>
+      <div id="hint">パレットで種類を選び、地面を左クリックして配置</div>
+      <aside id="help">
+        <strong>ショートカット</strong>
+        <ul>
+          <li>左クリック: 配置 / 選択</li>
+          <li>右ドラッグ: 視点回転　ホイール: ズーム</li>
+          <li>Shift+右ドラッグ: 視点の平行移動</li>
+          <li>G 移動　T 自由回転　R 90°回転</li>
+          <li>D 複製　Delete 削除　Esc 解除</li>
+          <li>V 歩いて見る　Ctrl+S 保存</li>
+          <li>歩行: WASD　Shift 走る　Space ジャンプ　Esc 戻る</li>
+        </ul>
+      </aside>
+      <div id="crosshair" hidden></div>
+      <div id="mode-badge" hidden>歩行モード（Esc で編集に戻る）</div>
+      <div id="selection" hidden>
+        <span id="sel-name"></span>
+        <button id="btn-move" type="button" class="btn tiny">移動</button>
+        <button id="btn-rot" type="button" class="btn tiny">自由回転</button>
+        <button id="btn-rot90" type="button" class="btn tiny">90°回転</button>
+        <button id="btn-dup" type="button" class="btn tiny">複製</button>
+        <button id="btn-del" type="button" class="btn tiny danger">削除</button>
+        <button id="btn-deselect" type="button" class="btn tiny">解除</button>
+      </div>
+    </main>
+    <footer id="status">準備中</footer>
+  </div>
+  <script type="module" src="./main.js"></script>
+  <script>
+    setTimeout(() => {
+      const el = document.getElementById('loading');
+      if (el && !el.hidden && !window.mapEditor) {
+        el.textContent = '読み込みに失敗しました。ネットワーク接続と Chrome を確認してください。';
+      }
+    }, 15000);
+  </script>
+</body>
+</html>
